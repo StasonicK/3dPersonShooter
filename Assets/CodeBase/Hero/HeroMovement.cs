@@ -22,7 +22,7 @@ namespace CodeBase.Hero
 
             if (_inputService.Axis.sqrMagnitude > Constants.Epsilon)
             {
-                movementVector = transform.TransformDirection(_inputService.Axis);
+                movementVector = new Vector3(_inputService.Axis.x, 0f, _inputService.Axis.y);
                 movementVector.y = 0;
                 movementVector.Normalize();
 
