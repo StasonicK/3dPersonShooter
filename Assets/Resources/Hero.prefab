@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 1758395192047091461}
   - component: {fileID: 1758395192047091486}
   - component: {fileID: 6198620182247850625}
+  - component: {fileID: 1758395190535456912}
   m_Layer: 6
   m_Name: Hero
   m_TagString: Untagged
@@ -184,3 +185,52 @@ MonoBehaviour:
     m_Bits: 128
   _spherePosition: {x: 0, y: 0, z: 0}
   _gravity: -9.81
+--- !u!114 &1758395190535456912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758395192047091460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fef2ec6449a54b3f81754442a7b59fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _xAxis:
+    Value: 0
+    m_SpeedMode: 0
+    m_MaxSpeed: 300
+    m_AccelTime: 0
+    m_DecelTime: 0
+    m_InputAxisName: Swipe X
+    m_InputAxisValue: 0
+    m_InvertInput: 0
+    m_MinValue: -180
+    m_MaxValue: 180
+    m_Wrap: 1
+    m_Recentering:
+      m_enabled: 0
+      m_WaitTime: 0
+      m_RecenteringTime: 0
+      m_LegacyHeadingDefinition: 0
+      m_LegacyVelocityFilterStrength: 0
+  _yAxis:
+    Value: 0
+    m_SpeedMode: 0
+    m_MaxSpeed: 300
+    m_AccelTime: 0
+    m_DecelTime: 0
+    m_InputAxisName: Swipe Y
+    m_InputAxisValue: 0
+    m_InvertInput: 1
+    m_MinValue: -60
+    m_MaxValue: 60
+    m_Wrap: 0
+    m_Recentering:
+      m_enabled: 0
+      m_WaitTime: 0
+      m_RecenteringTime: 0
+      m_LegacyHeadingDefinition: 0
+      m_LegacyVelocityFilterStrength: 0
+  _cameraFollowPosition: {fileID: 20720223}
