@@ -11,12 +11,13 @@ namespace CodeBase.Hero
 
         private IInputService _inputService;
 
-        private void Awake()
-        {
+        private void Awake() => 
             _inputService = AllServices.Container.Single<IInputService>();
-        }
 
-        private void Update()
+        private void Update() => 
+            Move();
+
+        private void Move()
         {
             Vector3 movementVector = Vector3.zero;
 
