@@ -4,7 +4,7 @@ namespace CodeBase.Infrastructure
 {
     public class GameRunner : MonoBehaviour
     {
-        public GameBootstrapper BootstrapperPrefab;
+        [SerializeField] private GameBootstrapper _bootstrapperPrefab;
 
         private void Awake()
         {
@@ -12,7 +12,7 @@ namespace CodeBase.Infrastructure
 
             if (bootstrapper != null) return;
 
-            Instantiate(BootstrapperPrefab);
+            Instantiate(_bootstrapperPrefab);
         }
     }
 }
