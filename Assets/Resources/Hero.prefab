@@ -23,14 +23,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20720222}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.45, z: 0}
+  m_LocalRotation: {x: 0, y: -0.10452837, z: 0, w: 0.9945219}
+  m_LocalPosition: {x: 0, y: 1.45, z: -2.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1758395192047091457}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -12, z: 0}
 --- !u!1 &1758395192047091460
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,8 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fd0a9d194db1948aba38f8a9cbe669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterController: {fileID: 1758395192047091461}
   _movementSpeed: 3
+  _jumpHeight: 1
+  _gravityValue: -9.81
 --- !u!114 &6198620182247850625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c135f7151b44e2b4d5c2674933f796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterController: {fileID: 1758395192047091461}
   _groundYOffset: 0.6
   _groundMask:
     serializedVersion: 2
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758395192047091460}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fef2ec6449a54b3f81754442a7b59fee, type: 3}
   m_Name: 

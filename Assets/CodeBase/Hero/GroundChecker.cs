@@ -3,15 +3,21 @@ using UnityEngine;
 
 namespace CodeBase.Hero
 {
+    [RequireComponent(typeof(CharacterController))]
     public class GroundChecker : MonoBehaviour
     {
-        [SerializeField] private CharacterController _characterController;
         [SerializeField] private float _groundYOffset;
         [SerializeField] private LayerMask _groundMask;
         [SerializeField] private Vector3 _spherePosition;
         [SerializeField] private float _gravity = -9.81f;
 
+        private CharacterController _characterController;
         private Vector3 _velocity;
+
+        private void Awake()
+        {
+            _characterController = GetComponent<CharacterController>();
+        }
 
         private void Update()
         {
