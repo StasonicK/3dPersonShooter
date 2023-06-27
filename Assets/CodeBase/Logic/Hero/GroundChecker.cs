@@ -13,15 +13,11 @@ namespace CodeBase.Logic.Hero
         private CharacterController _characterController;
         private Vector3 _velocity;
 
-        private void Awake()
-        {
+        private void Awake() => 
             _characterController = GetComponent<CharacterController>();
-        }
 
-        private void Update()
-        {
+        private void Update() => 
             Gravity();
-        }
 
         private bool IsGrounded()
         {

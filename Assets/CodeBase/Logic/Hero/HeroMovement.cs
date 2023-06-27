@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero
@@ -22,8 +21,10 @@ namespace CodeBase.Logic.Hero
             _characterController = GetComponent<CharacterController>();
         }
 
-        private void Start() =>
+        private void Start()
+        {
             _cameraMain = UnityEngine.Camera.main.transform;
+        }
 
         private void OnEnable() =>
             _playerInput.Enable();
@@ -44,7 +45,6 @@ namespace CodeBase.Logic.Hero
             Vector2 movementInput = _playerInput.Player.Move.ReadValue<Vector2>();
             Vector3 move = (_cameraMain.forward * movementInput.y + _cameraMain.right * movementInput.x);
             move.y = 0f;
-            // Vector3 move = new Vector3(movementInput.x, 0f, movementInput.y);
             _characterController.Move(move * _movementSpeed * Time.deltaTime);
 
             if (move != Vector3.zero)
