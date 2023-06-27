@@ -383,11 +383,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MobileInputPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 7801544281217398051, guid: c93ba477e03adad4c9fe91e49607ffd4,
-        type: 3}
-      propertyPath: m_Name
-      value: JoystickMoveArea
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93ba477e03adad4c9fe91e49607ffd4, type: 3}
 --- !u!224 &596403930 stripped
