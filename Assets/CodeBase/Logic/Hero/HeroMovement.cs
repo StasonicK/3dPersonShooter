@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-namespace CodeBase.Hero
+namespace CodeBase.Logic.Hero
 {
     [RequireComponent(typeof(CharacterController))]
     public class HeroMovement : MonoBehaviour
@@ -10,10 +11,9 @@ namespace CodeBase.Hero
         [SerializeField] private float _gravityValue = -9.81f;
 
         private CharacterController _characterController;
+        private Transform _cameraMain;
         private bool _isGrounded;
         private Vector3 _velocity;
-
-        // private IInputService _inputService;
         private PlayerInput _playerInput;
 
         private void Awake()
@@ -21,7 +21,9 @@ namespace CodeBase.Hero
             _playerInput = new PlayerInput();
             _characterController = GetComponent<CharacterController>();
         }
-        // _inputService = AllServices.Container.Single<IInputService>();
+
+        private void Start() =>
+            _cameraMain = UnityEngine.Camera.main.transform;
 
         private void OnEnable() =>
             _playerInput.Enable();
@@ -29,7 +31,10 @@ namespace CodeBase.Hero
         private void OnDisable() =>
             _playerInput.Disable();
 
-        private void Update()
+        private void Update() =>
+            Move();
+
+        private void Move()
         {
             _isGrounded = _characterController.isGrounded;
 
@@ -37,7 +42,9 @@ namespace CodeBase.Hero
                 _velocity.y = 0;
 
             Vector2 movementInput = _playerInput.Player.Move.ReadValue<Vector2>();
-            Vector3 move = new Vector3(movementInput.x, 0f, movementInput.y);
+            Vector3 move = (_cameraMain.forward * movementInput.y + _cameraMain.right * movementInput.x);
+            move.y = 0f;
+            // Vector3 move = new Vector3(movementInput.x, 0f, movementInput.y);
             _characterController.Move(move * _movementSpeed * Time.deltaTime);
 
             if (move != Vector3.zero)
@@ -48,25 +55,6 @@ namespace CodeBase.Hero
 
             _velocity.y += _gravityValue * Time.deltaTime;
             _characterController.Move(_velocity * Time.deltaTime);
-            // Move();
-        }
-
-        private void Move()
-        {
-            Vector3 movementVector = Vector3.zero;
-
-            // if (_inputService.Axis.sqrMagnitude > Constants.Epsilon)
-            // {
-            //     movementVector = new Vector3(_inputService.Axis.x, 0f, _inputService.Axis.y);
-            //     movementVector.y = 0;
-            //     movementVector.Normalize();
-            //
-            //     transform.forward = movementVector;
-            // }
-
-            movementVector += Physics.gravity;
-
-            _characterController.Move(_movementSpeed * movementVector * Time.deltaTime);
         }
     }
 }

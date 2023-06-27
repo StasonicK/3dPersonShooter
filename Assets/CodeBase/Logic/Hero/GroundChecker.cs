@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace CodeBase.Hero
+namespace CodeBase.Logic.Hero
 {
     [RequireComponent(typeof(CharacterController))]
     public class GroundChecker : MonoBehaviour
