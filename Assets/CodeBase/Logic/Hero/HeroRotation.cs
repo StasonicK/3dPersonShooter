@@ -16,7 +16,7 @@ namespace CodeBase.Logic.Hero
             _child = transform.GetChild(0).transform;
         }
 
-        private void Start() => 
+        private void Start() =>
             _cameraMain = UnityEngine.Camera.main.transform;
 
         private void OnEnable() =>
@@ -25,7 +25,7 @@ namespace CodeBase.Logic.Hero
         private void OnDisable() =>
             _playerInput.Disable();
 
-        private void Update() => 
+        private void Update() =>
             Rotate();
 
         private void Rotate()

@@ -27,7 +27,6 @@ namespace CodeBase.Logic.Camera
         {
             Vector2 delta = _playerInput.Player.Look.ReadValue<Vector2>();
             _cinemachineFreeLook.m_XAxis.Value += delta.x * 200 * _lookSpeed * Time.deltaTime;
-            _cinemachineFreeLook.m_YAxis.Value += delta.y * _lookSpeed * Time.deltaTime;
         }
     }
 }

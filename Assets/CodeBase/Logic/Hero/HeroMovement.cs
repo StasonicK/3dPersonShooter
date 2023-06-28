@@ -1,3 +1,4 @@
+using CodeBase.Logic.Hero.Animations;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero
@@ -6,10 +7,12 @@ namespace CodeBase.Logic.Hero
     public class HeroMovement : MonoBehaviour
     {
         [SerializeField] private float _movementSpeed;
-        [SerializeField] private float _jumpHeight = 1.0f;
-        [SerializeField] private float _gravityValue = -9.81f;
+
+        private const float MinimumMagnitude = 0.01f;
+        private const float RunMultiplayer = 2.0f;
 
         private CharacterController _characterController;
+        private HeroAnimator _heroAnimator;
         private Transform _cameraMain;
         private bool _isGrounded;
         private Vector3 _velocity;
@@ -19,6 +22,7 @@ namespace CodeBase.Logic.Hero
         {
             _playerInput = new PlayerInput();
             _characterController = GetComponent<CharacterController>();
+            _heroAnimator = GetComponent<HeroAnimator>();
         }
 
         private void Start()
@@ -37,24 +41,31 @@ namespace CodeBase.Logic.Hero
 
         private void Move()
         {
-            _isGrounded = _characterController.isGrounded;
-
-            if (_isGrounded && _velocity.y < 0)
-                _velocity.y = 0;
-
             Vector2 movementInput = _playerInput.Player.Move.ReadValue<Vector2>();
+
             Vector3 move = (_cameraMain.forward * movementInput.y + _cameraMain.right * movementInput.x);
             move.y = 0f;
-            _characterController.Move(move * _movementSpeed * Time.deltaTime);
 
             if (move != Vector3.zero)
                 transform.forward = move;
 
-            if (_playerInput.Player.Jump.triggered && _isGrounded)
-                _velocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
-
-            _velocity.y += _gravityValue * Time.deltaTime;
-            _characterController.Move(_velocity * Time.deltaTime);
+            if (movementInput.magnitude > MinimumMagnitude)
+            {
+                if (_playerInput.Player.Run.IsPressed())
+                {
+                    _characterController.Move(move * _movementSpeed * RunMultiplayer * Time.deltaTime);
+                    _heroAnimator.PlayRun();
+                }
+                else
+                {
+                    _characterController.Move(move * _movementSpeed * Time.deltaTime);
+                    _heroAnimator.PlayWalk();
+                }
+            }
+            else
+            {
+                _heroAnimator.PlayIdle();
+            }
         }
     }
 }
