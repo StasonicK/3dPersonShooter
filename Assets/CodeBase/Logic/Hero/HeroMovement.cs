@@ -6,7 +6,10 @@ namespace CodeBase.Logic.Hero
     [RequireComponent(typeof(CharacterController))]
     public class HeroMovement : MonoBehaviour
     {
-        [SerializeField] private float _movementSpeed;
+        [SerializeField] private float _walkForwardSpeed = 3f;
+        [SerializeField] private float _walkBackSpeed = 2f;
+        [SerializeField] private float _runForwardSpeed = 7f;
+        [SerializeField] private float _runBackSpeed = 5f;
 
         private const float MinimumMagnitude = 0.01f;
         private const float RunMultiplayer = 2.0f;
@@ -43,7 +46,8 @@ namespace CodeBase.Logic.Hero
         {
             Vector2 movementInput = _playerInput.Player.Move.ReadValue<Vector2>();
 
-            Vector3 move = (_cameraMain.forward * movementInput.y + _cameraMain.right * movementInput.x);
+            Vector3 move = (_cameraMain.forward * movementInput.y + _cameraMain.right * movementInput.x).normalized;
+            Debug.Log($"move: {move}");
             move.y = 0f;
 
             if (move != Vector3.zero)
@@ -53,18 +57,36 @@ namespace CodeBase.Logic.Hero
             {
                 if (_playerInput.Player.Run.IsPressed())
                 {
-                    _characterController.Move(move * _movementSpeed * RunMultiplayer * Time.deltaTime);
+                    _characterController.Move(move * MovementSpeed(move, true) * RunMultiplayer * Time.deltaTime);
                     _heroAnimator.PlayRun();
                 }
                 else
                 {
-                    _characterController.Move(move * _movementSpeed * Time.deltaTime);
+                    _characterController.Move(move * MovementSpeed(move, false) * Time.deltaTime);
                     _heroAnimator.PlayWalk();
                 }
             }
             else
             {
                 _heroAnimator.PlayIdle();
+            }
+        }
+
+        private float MovementSpeed(Vector3 movement, bool isRun)
+        {
+            if (isRun)
+            {
+                if (movement.x > 0f)
+                    return _runForwardSpeed;
+                else
+                    return _runBackSpeed;
+            }
+            else
+            {
+                if (movement.x > 0f)
+                    return _walkForwardSpeed;
+                else
+                    return _walkBackSpeed;
             }
         }
     }
