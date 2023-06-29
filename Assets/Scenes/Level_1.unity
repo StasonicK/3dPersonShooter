@@ -1143,11 +1143,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero
       objectReference: {fileID: 0}
-    - target: {fileID: 8719922241554686201, guid: 10ff8cb54831530468b77dd3862136bd,
-        type: 3}
-      propertyPath: AimPosition
-      value: 
-      objectReference: {fileID: 1081553187}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10ff8cb54831530468b77dd3862136bd, type: 3}
 --- !u!1 &2114283753834967212

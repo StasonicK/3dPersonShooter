@@ -528,11 +528,13 @@ GameObject:
   - component: {fileID: 1758395192047091457}
   - component: {fileID: 1758395192047091461}
   - component: {fileID: 4612893459951703297}
+  - component: {fileID: 3627560996237469110}
   - component: {fileID: 1758395192047091486}
   - component: {fileID: 4996879067217677783}
   - component: {fileID: 6198620182247850625}
   - component: {fileID: 8719922241554686201}
-  - component: {fileID: 3627560996237469110}
+  - component: {fileID: 7984722399912861257}
+  - component: {fileID: 1888560464400095739}
   m_Layer: 6
   m_Name: Hero
   m_TagString: Untagged
@@ -595,6 +597,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3627560996237469110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758395192047091460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a110240490944cf48ba8774bbacd666e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 4612893459951703297}
 --- !u!114 &1758395192047091486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,16 +672,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 4
-  _fovSmoothSpeed: 10
-  _aimSmoothSpeed: 20
   _shoulderSwapSpeed: 10
-  _adsFov: 40
-  _aimMask:
-    serializedVersion: 2
-    m_Bits: 129
   _cameraFollowPosition: {fileID: 976826846}
-  AimPosition: {fileID: 0}
---- !u!114 &3627560996237469110
+--- !u!114 &7984722399912861257
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -675,10 +683,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1758395192047091460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a110240490944cf48ba8774bbacd666e, type: 3}
+  m_Script: {fileID: 11500000, guid: f9731769e156463cae4869c22bd85aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 4612893459951703297}
+  _fovSmoothSpeed: 10
+  _adsFov: 40
+--- !u!114 &1888560464400095739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758395192047091460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8bc612ed1e445d1b10a9ffc9b310194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collidableLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  _aimSmoothSpeed: 20
+  _maxDistance: 50
+  AimPosition: {fileID: 0}
 --- !u!1 &1857414217533940438
 GameObject:
   m_ObjectHideFlags: 0

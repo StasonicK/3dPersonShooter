@@ -13,6 +13,7 @@ namespace CodeBase.Logic.Hero
         private readonly int _walkHash = Animator.StringToHash("Walking");
         private readonly int _runHash = Animator.StringToHash("Running");
         private readonly int _jumpHash = Animator.StringToHash("Jumping");
+        private readonly int _aimHash = Animator.StringToHash("Aiming");
         private readonly int _idleStateHash = Animator.StringToHash("IdleState");
         private readonly int _walkingTreeStateHash = Animator.StringToHash("WalkingTree");
         private readonly int _runningTreeStateHash = Animator.StringToHash("RunningTree");
@@ -55,9 +56,14 @@ namespace CodeBase.Logic.Hero
             // _animator.SetBool(_walkHash, false);
         }
 
-
         public void PlayJump() =>
             _animator.SetTrigger(_jumpHash);
+
+        public void PlayAim() =>
+            _animator.SetBool(_aimHash, true);
+
+        public void PlayHipFire() =>
+            _animator.SetBool(_aimHash, false);
 
         public void EnteredState(int stateHash)
         {

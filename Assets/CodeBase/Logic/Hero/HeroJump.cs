@@ -3,16 +3,17 @@ using UnityEngine;
 namespace CodeBase.Logic.Hero
 {
     [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(HeroAnimator))]
     public class HeroJump : MonoBehaviour
     {
         [SerializeField] private float _jumpHeight = 1.0f;
         [SerializeField] private float _gravityValue = -9.81f;
 
+        private PlayerInput _playerInput;
         private CharacterController _characterController;
         private HeroAnimator _heroAnimator;
         private bool _isGrounded;
         private Vector3 _velocity;
-        private PlayerInput _playerInput;
 
         private void Awake()
         {

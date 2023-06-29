@@ -1,34 +1,47 @@
-﻿using Cinemachine;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Logic.Hero
 {
+    [RequireComponent(typeof(HeroAiming))]
     public class HeroRotation : MonoBehaviour
     {
-        [SerializeField] private float _rotationSpeed = 4f;
-        [SerializeField] private float _fovSmoothSpeed = 10;
-        [SerializeField] private float _aimSmoothSpeed = 20;
+        [SerializeField] private float _hipRotationVerticalSpeed = 2f;
+        [SerializeField] private float _hipRotationHorizontalSpeed = 4f;
+        [SerializeField] private float _aimRotationVerticalSpeed = 1f;
+        [SerializeField] private float _aimRotationHorizontalSpeed = 2f;
         [SerializeField] private float _shoulderSwapSpeed = 10;
-        [SerializeField] private float _adsFov = 40f;
-        [SerializeField] private LayerMask _aimMask;
         [SerializeField] private Transform _cameraFollowPosition;
 
         private const int MaxVerticalAngle = 70;
 
-        public Transform AimPosition;
         private PlayerInput _playerInput;
+        private HeroAiming _heroAiming;
         private float xAxis, yAxis;
-        private Animator _animator;
-        private CinemachineVirtualCamera _virtualCamera;
-        private float _hipFov;
-        private float _currentFov;
         private float _xFollowPosition;
         private float _yFollowPosition;
         private float _ogYPosition;
+        private float _currentRotationVerticalSpeed;
+        private float _currentRotationHorizontalSpeed;
 
         private void Awake()
         {
             _playerInput = new PlayerInput();
+            _heroAiming = GetComponent<HeroAiming>();
+            _heroAiming.ToHip += SetHip;
+            _heroAiming.ToAim += SetAim;
+            SetHip();
+        }
+
+        private void SetHip()
+        {
+            _currentRotationVerticalSpeed = _hipRotationVerticalSpeed;
+            _currentRotationHorizontalSpeed = _hipRotationHorizontalSpeed;
+        }
+
+        private void SetAim()
+        {
+            _currentRotationVerticalSpeed = _aimRotationVerticalSpeed;
+            _currentRotationHorizontalSpeed = _aimRotationHorizontalSpeed;
         }
 
         private void OnEnable() =>
@@ -45,30 +58,16 @@ namespace CodeBase.Logic.Hero
             _xFollowPosition = _cameraFollowPosition.localPosition.x;
             _ogYPosition = _cameraFollowPosition.localPosition.y;
             _yFollowPosition = _ogYPosition;
-            _virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
-            _hipFov = _virtualCamera.m_Lens.FieldOfView;
-            _animator = GetComponent<Animator>();
         }
 
         private void Rotate()
         {
             Vector2 delta = _playerInput.Player.Look.ReadValue<Vector2>();
 
-            // as long as there is no aim mode
-            _currentFov = _adsFov;
-
-            xAxis += delta.x * _rotationSpeed;
-            yAxis -= delta.y * _rotationSpeed;
+            xAxis += delta.x * _currentRotationHorizontalSpeed;
+            yAxis -= delta.y * _currentRotationVerticalSpeed;
             yAxis = Mathf.Clamp(yAxis, -MaxVerticalAngle, MaxVerticalAngle);
 
-            _virtualCamera.m_Lens.FieldOfView = Mathf.Lerp(_virtualCamera.m_Lens.FieldOfView, _currentFov,
-                _fovSmoothSpeed * Time.deltaTime);
-
-            Vector2 screenCentre = new Vector2(Screen.width / 2, Screen.height / 2);
-            Ray ray = Camera.main.ScreenPointToRay(screenCentre);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _aimMask))
-                AimPosition.position = Vector3.Lerp(AimPosition.position, hit.point, _aimSmoothSpeed * Time.deltaTime);
 
             MoveCamera();
         }
@@ -82,7 +81,7 @@ namespace CodeBase.Logic.Hero
 
         void MoveCamera()
         {
-            if (Input.GetKeyDown(KeyCode.LeftAlt))
+            if (_playerInput.Player.SwitchSide.IsPressed())
                 _xFollowPosition = -_xFollowPosition;
 
             _yFollowPosition = _ogYPosition;

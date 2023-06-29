@@ -3,6 +3,7 @@ using UnityEngine;
 namespace CodeBase.Logic.Hero
 {
     [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(HeroAnimator))]
     public class HeroMovement : MonoBehaviour
     {
         [SerializeField] private float _walkForwardSpeed = 3f;
@@ -11,14 +12,12 @@ namespace CodeBase.Logic.Hero
         [SerializeField] private float _runBackSpeed = 5f;
 
         private const float MinimumMagnitude = 0.01f;
-        private const float RunMultiplayer = 2.0f;
 
+        private PlayerInput _playerInput;
         private CharacterController _characterController;
         private HeroAnimator _heroAnimator;
-        private Transform _cameraMain;
         private bool _isGrounded;
         private Vector3 _velocity;
-        private PlayerInput _playerInput;
         [HideInInspector] public Vector3 Direction;
 
         private void Awake()
@@ -26,11 +25,6 @@ namespace CodeBase.Logic.Hero
             _playerInput = new PlayerInput();
             _characterController = GetComponent<CharacterController>();
             _heroAnimator = GetComponent<HeroAnimator>();
-        }
-
-        private void Start()
-        {
-            _cameraMain = Camera.main.transform;
         }
 
         private void OnEnable() =>
