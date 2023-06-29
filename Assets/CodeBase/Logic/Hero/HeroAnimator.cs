@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CodeBase.Logic.Hero.Animations
+namespace CodeBase.Logic.Hero
 {
     [RequireComponent(typeof(CharacterController))]
     public class HeroAnimator : MonoBehaviour, IAnimationStateReader
@@ -28,10 +28,14 @@ namespace CodeBase.Logic.Hero.Animations
         private void Awake() =>
             _characterController = GetComponent<CharacterController>();
 
-        private void Start()
-        {
+        private void Start() =>
             PlayIdle();
-        }
+
+        public void SetHorizontalInput(float value) =>
+            _animator.SetFloat(_horizontalInputHash, value);
+
+        public void SetVerticalInput(float value) =>
+            _animator.SetFloat(_verticalInputHash, value);
 
         public void PlayIdle()
         {
@@ -39,30 +43,21 @@ namespace CodeBase.Logic.Hero.Animations
             _animator.SetBool(_runHash, false);
         }
 
-        public void ResetToIdle()
-        {
-            _animator.Play(_idleStateHash);
-        }
-
         public void PlayWalk()
         {
             _animator.SetBool(_walkHash, true);
-            _animator.SetFloat(_horizontalInputHash, _characterController.velocity.x, 0.1f, Time.deltaTime);
-            _animator.SetFloat(_verticalInputHash, _characterController.velocity.y, 0.1f, Time.deltaTime);
+            _animator.SetBool(_runHash, false);
         }
 
         public void PlayRun()
         {
             _animator.SetBool(_runHash, true);
-            _animator.SetFloat(_horizontalInputHash, _characterController.velocity.x, 0.1f, Time.deltaTime);
-            _animator.SetFloat(_verticalInputHash, _characterController.velocity.y, 0.1f, Time.deltaTime);
+            // _animator.SetBool(_walkHash, false);
         }
 
 
-        public void PlayJump()
-        {
+        public void PlayJump() =>
             _animator.SetTrigger(_jumpHash);
-        }
 
         public void EnteredState(int stateHash)
         {

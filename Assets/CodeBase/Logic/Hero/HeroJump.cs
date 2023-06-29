@@ -1,4 +1,3 @@
-using CodeBase.Logic.Hero.Animations;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero

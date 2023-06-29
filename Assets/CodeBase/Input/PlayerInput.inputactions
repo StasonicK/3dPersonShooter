@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SwitchSide",
+                    "type": "Button",
+                    "id": "4c58f75c-77ca-46a5-801e-b9ba21c500c9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Look",
                     "type": "Value",
                     "id": "ee2bafdd-2e23-43ac-9170-95601bf5f9f5",
@@ -161,6 +170,28 @@
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0224056b-02df-4c87-bb44-e17374e3e318",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "SwitchSide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2f76fb7-ac51-4464-8f99-40fa1c4436d1",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "SwitchSide",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
