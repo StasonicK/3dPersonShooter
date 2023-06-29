@@ -12,7 +12,7 @@ namespace CodeBase.Logic.Hero
 
         private const float CentralPosition = 0.5f;
 
-        [HideInInspector] public Transform AimPosition;
+        public Transform AimPosition;
         private PlayerInput _playerInput;
         private HeroAnimator _heroAnimator;
 
@@ -23,7 +23,6 @@ namespace CodeBase.Logic.Hero
         {
             _playerInput = new PlayerInput();
             _heroAnimator = GetComponent<HeroAnimator>();
-            AimPosition = transform;
         }
 
         private void OnEnable() =>
@@ -47,8 +46,9 @@ namespace CodeBase.Logic.Hero
 
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(CentralPosition, CentralPosition, 0));
             var targetPosition = MaxDistancePosition(ray);
-
-            AimPosition.position = Vector3.Lerp(AimPosition.position, targetPosition, _aimSmoothSpeed * Time.deltaTime);
+            AimPosition.position =
+                Vector3.Lerp(AimPosition.position, targetPosition, _aimSmoothSpeed * Time.deltaTime);
+            Debug.Log($"_aimPosition.position: {AimPosition.position}");
         }
 
         private Vector3 MaxDistancePosition(Ray ray)
