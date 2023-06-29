@@ -68,7 +68,6 @@ namespace CodeBase.Logic.Hero
             yAxis -= delta.y * _currentRotationVerticalSpeed;
             yAxis = Mathf.Clamp(yAxis, -MaxVerticalAngle, MaxVerticalAngle);
 
-
             MoveCamera();
         }
 

@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace CodeBase.Logic.Hero
 {
-    [RequireComponent(typeof(CharacterController))]
     public class HeroAnimator : MonoBehaviour, IAnimationStateReader
     {
         [SerializeField] public Animator _animator;
@@ -18,16 +17,11 @@ namespace CodeBase.Logic.Hero
         private readonly int _walkingTreeStateHash = Animator.StringToHash("WalkingTree");
         private readonly int _runningTreeStateHash = Animator.StringToHash("RunningTree");
         private readonly int _jumpingTreeStateHash = Animator.StringToHash("JumpingTree");
-        private CharacterController _characterController;
 
         public AnimatorState State { get; private set; }
-        public bool IsJumping => State == AnimatorState.Jumping;
 
         public event Action<AnimatorState> StateEntered;
         public event Action<AnimatorState> StateExited;
-
-        private void Awake() =>
-            _characterController = GetComponent<CharacterController>();
 
         private void Start() =>
             PlayIdle();

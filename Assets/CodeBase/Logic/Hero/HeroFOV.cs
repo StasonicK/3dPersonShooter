@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CodeBase.Logic.Hero
 {
     [RequireComponent(typeof(HeroAiming))]
-    public class HeroFOV : MonoBehaviour
+    public class HeroFov : MonoBehaviour
     {
         [SerializeField] private float _fovSmoothSpeed = 10;
         [SerializeField] private float _adsFov = 40f;

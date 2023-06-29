@@ -78,8 +78,6 @@ namespace CodeBase.Logic.Hero
 
         private float MovementSpeed(Vector3 direction, bool isRun)
         {
-            // Debug.Log($"direction: {direction}");
-
             if (isRun)
             {
                 if (direction.x > 0f)
