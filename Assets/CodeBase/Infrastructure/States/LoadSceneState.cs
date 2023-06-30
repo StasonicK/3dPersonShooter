@@ -26,21 +26,16 @@ namespace CodeBase.Infrastructure.States
         {
             _scene = scene;
 
-            if (_scene.ToString().Contains(LevelName))
-            {
+            if (_scene.ToString().Contains(LevelName)) 
                 _loadingCurtain.Show();
-            }
 
             _sceneLoader.Load(_scene, OnLoaded);
         }
 
-        public void Exit()
-        {
-        }
+        public void Exit() =>
+            _loadingCurtain.Hide();
 
-        private async void OnLoaded(Scene scene)
-        {
+        private void OnLoaded(Scene scene) =>
             _stateMachine.Enter<GameLoopState>();
-        }
     }
 }
