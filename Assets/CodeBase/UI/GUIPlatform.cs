@@ -6,8 +6,8 @@ namespace CodeBase.UI
     {
         [SerializeField] private GameObject _mobileGui;
 
-        private void Awake() =>
-            CheckPlatform();
+        // private void Awake() =>
+        //     CheckPlatform();
 
         private void CheckPlatform()
         {
