@@ -1088,7 +1088,7 @@ SphereCollider:
   m_GameObject: {fileID: 1989132484}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -1099,7 +1099,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1989132484}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1221,6 +1221,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hero
       objectReference: {fileID: 0}
+    - target: {fileID: 1888560464400095739, guid: 10ff8cb54831530468b77dd3862136bd,
+        type: 3}
+      propertyPath: AimPosition
+      value: 
+      objectReference: {fileID: 1989132485}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10ff8cb54831530468b77dd3862136bd, type: 3}
 --- !u!1 &2114283753834967212
