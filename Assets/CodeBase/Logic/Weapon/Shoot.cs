@@ -10,26 +10,25 @@ namespace CodeBase.Logic.Weapon
         [SerializeField] private Transform _barrelPosition;
         [SerializeField] private float _bulletVelocity;
         [SerializeField] private AudioClip _gunShot;
-        [SerializeField] float _lightReturnSpeed = 20;
-        [HideInInspector] public AudioSource _audioSource;
+        [SerializeField] private float _lightReturnSpeed = 20;
 
+        [HideInInspector] public AudioSource _audioSource;
         private PlayerInput _playerInput;
         private HeroAiming _heroAiming;
         private Light _muzzleFlashLight;
         private ParticleSystem _muzzleFlashParticles;
         private float _lightIntensity;
-        public float Damage = 20;
         private float _fireRateTimer;
 
         private void Start()
         {
+            _audioSource = GetComponent<AudioSource>();
             _playerInput = new PlayerInput();
             _heroAiming = GetComponentInParent<HeroAiming>();
             _muzzleFlashLight = GetComponentInChildren<Light>();
             _muzzleFlashParticles = GetComponentInChildren<ParticleSystem>();
             _lightIntensity = _muzzleFlashLight.intensity;
             _muzzleFlashLight.intensity = 0;
-            _audioSource = GetComponent<AudioSource>();
             _fireRateTimer = _fireRate;
         }
 

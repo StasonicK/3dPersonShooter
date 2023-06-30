@@ -1,6 +1,5 @@
 using CodeBase.Logic.Enemy;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Bullet : MonoBehaviour
 {

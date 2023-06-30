@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4405748908407175809}
   - component: {fileID: 759849255973401892}
   - component: {fileID: 3273960346187153902}
+  - component: {fileID: 4660956830275445718}
   m_Layer: 0
-  m_Name: 7_62x39mm
+  m_Name: AK47_bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,3 +84,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4660956830275445718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3922509821686636603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 139adfda4db24a84bd303570d398c95b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDestroy: 5
+  _damage: 5
+  Direction: {x: 0, y: 0, z: 0}
