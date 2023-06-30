@@ -92,11 +92,11 @@ namespace CodeBase.Logic.Hero
 
         void MoveCamera()
         {
-            // if (_switchSide)
-            // {
-            //     _xFollowPosition = -_xFollowPosition;
-            //     _switchSide = false;
-            // }
+            if (_switchSide)
+            {
+                _xFollowPosition = -_xFollowPosition;
+                _switchSide = false;
+            }
 
             _yFollowPosition = _ogYPosition;
 
