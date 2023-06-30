@@ -6,8 +6,8 @@ namespace CodeBase.Services.Input
     {
         private const string Button = "Fire";
 
-        public override bool IsAttackButtonUp() => SimpleInput.GetButtonUp(Button);
+        // public override bool IsAttackButtonUp() => SimpleInput.GetButtonUp(Button);
 
-        public override Vector2 Axis => SimpleInputAxis();
+        // public override Vector2 Axis => SimpleInputAxis();
     }
 }

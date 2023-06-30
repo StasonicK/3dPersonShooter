@@ -38,7 +38,7 @@ namespace CodeBase.Logic.Hero
             if (_isGrounded && _velocity.y < 0)
                 _velocity.y = 0;
 
-            if (_playerInput.Player.Jump.triggered && _isGrounded)
+            if (_playerInput.Player.Jump.IsPressed() && _isGrounded)
             {
                 _velocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
                 _heroAnimator.PlayJump();

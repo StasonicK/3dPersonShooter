@@ -1,10 +1,14 @@
-﻿using CodeBase.Logic.Hero;
+﻿using System;
+using CodeBase.Logic.Hero;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CodeBase.Logic.Weapon
 {
     public class Shoot : MonoBehaviour
     {
+        [SerializeField] private Button _shootButtonLeft;
+        [SerializeField] private Button _shootButtonRight;
         [SerializeField] private float _fireRate;
         [SerializeField] private GameObject _bullet;
         [SerializeField] private Transform _barrelPosition;
@@ -19,6 +23,16 @@ namespace CodeBase.Logic.Weapon
         private ParticleSystem _muzzleFlashParticles;
         private float _lightIntensity;
         private float _fireRateTimer;
+        private bool _clicked;
+
+        private void Awake()
+        {
+            // _shootButtonLeft.onClick.AddListener(Clicked);
+            // _shootButtonRight.onClick.AddListener(Clicked);
+        }
+
+        private void Clicked() =>
+            _clicked = true;
 
         private void Start()
         {
@@ -31,6 +45,12 @@ namespace CodeBase.Logic.Weapon
             _muzzleFlashLight.intensity = 0;
             _fireRateTimer = _fireRate;
         }
+
+        private void OnEnable() =>
+            _playerInput.Enable();
+
+        private void OnDisable() =>
+            _playerInput.Disable();
 
         private void Update()
         {
@@ -48,7 +68,7 @@ namespace CodeBase.Logic.Weapon
             if (_fireRateTimer < _fireRate)
                 return false;
 
-            if (_playerInput.Player.Shoot.IsPressed())
+            if (_playerInput.Player.Shoot.IsPressed() || _clicked)
                 return true;
 
             return false;
