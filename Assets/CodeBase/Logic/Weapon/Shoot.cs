@@ -21,13 +21,8 @@ namespace CodeBase.Logic.Weapon
         private float _fireRateTimer;
         private bool _clicked;
 
-        private void Awake()
-        {
+        private void Awake() =>
             _playerInput = new PlayerInput();
-        }
-
-        private void Clicked() =>
-            _clicked = true;
 
         private void Start()
         {
@@ -62,7 +57,7 @@ namespace CodeBase.Logic.Weapon
             if (_fireRateTimer < _fireRate)
                 return false;
 
-            if (_playerInput.Player.Shoot.IsPressed() || _clicked)
+            if (_playerInput.Player.Shoot.IsPressed())
                 return true;
 
             return false;
@@ -78,12 +73,9 @@ namespace CodeBase.Logic.Weapon
             TriggerMuzzleFlash();
 
             GameObject currentBullet = Instantiate(_bullet, _barrelPosition.position, _barrelPosition.rotation);
-
-            Bullet bullet = currentBullet.GetComponent<Bullet>();
-            bullet.Direction = _barrelPosition.transform.forward;
-
-            Rigidbody rb = currentBullet.GetComponent<Rigidbody>();
-            rb.AddForce(_barrelPosition.forward * _bulletVelocity, ForceMode.Impulse);
+            currentBullet.GetComponent<Bullet>().Direction = _barrelPosition.transform.forward;
+            currentBullet.GetComponentInChildren<Rigidbody>()
+                .AddForce(_barrelPosition.forward * _bulletVelocity, ForceMode.Impulse);
         }
 
         private void TriggerMuzzleFlash()

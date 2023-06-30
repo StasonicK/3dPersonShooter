@@ -23,28 +23,29 @@ namespace CodeBase.Logic.Hero
             _heroAnimator = GetComponent<HeroAnimator>();
         }
 
-        private void TryJump(InputAction.CallbackContext obj)
-        {
-            if (_characterController.isGrounded)
-                Jump();
-        }
-
         private void OnEnable()
         {
             _playerInput.Enable();
-            _playerInput.Player.Jump.started += TryJump;
+            _playerInput.Player.Jump.started += Jump;
         }
 
         private void OnDisable()
         {
             _playerInput.Disable();
-            _playerInput.Player.Jump.started -= TryJump;
+            _playerInput.Player.Jump.started -= Jump;
         }
 
-        private void Update()
+        private void Jump(InputAction.CallbackContext obj)
         {
-            Move();
+            if (_characterController.isGrounded)
+            {
+                _velocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
+                _heroAnimator.PlayJump();
+            }
         }
+
+        private void Update() =>
+            Move();
 
         private void Move()
         {
@@ -53,19 +54,8 @@ namespace CodeBase.Logic.Hero
             if (_isGrounded && _velocity.y < 0)
                 _velocity.y = 0;
 
-            // if (_playerInput.Player.Jump.IsPressed() && _isGrounded)
-            // {
-            //     Jump();
-            // }
-
             _velocity.y += _gravityValue * Time.deltaTime;
             _characterController.Move(_velocity * Time.deltaTime);
-        }
-
-        private void Jump()
-        {
-            _velocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
-            _heroAnimator.PlayJump();
         }
     }
 }

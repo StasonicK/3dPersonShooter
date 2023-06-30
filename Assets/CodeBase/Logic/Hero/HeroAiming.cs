@@ -48,6 +48,7 @@ namespace CodeBase.Logic.Hero
             var targetPosition = MaxDistancePosition(ray);
             AimPosition.position =
                 Vector3.Lerp(AimPosition.position, targetPosition, _aimSmoothSpeed * Time.deltaTime);
+            Debug.Log($"_aimPosition.position: {AimPosition.position}");
         }
 
         private Vector3 MaxDistancePosition(Ray ray)
