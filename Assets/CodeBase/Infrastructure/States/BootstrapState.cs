@@ -30,7 +30,7 @@ namespace CodeBase.Infrastructure.States
         private void RegisterServices()
         {
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
-            _services.RegisterSingle<IInputService>(new MobileInputService());
+            _services.RegisterSingle<IInputService>(new InputService());
         }
 
         public void Exit()

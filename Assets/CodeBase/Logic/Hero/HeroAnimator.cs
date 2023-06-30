@@ -44,10 +44,10 @@ namespace CodeBase.Logic.Hero
             _animator.SetBool(_runHash, false);
         }
 
-        public void PlayRun() => 
+        public void PlayRun() =>
             _animator.SetBool(_runHash, true);
 
-        public void PlayJump() => 
+        public void PlayJump() =>
             _animator.SetTrigger(_jumpHash);
 
         public void PlayAim() =>

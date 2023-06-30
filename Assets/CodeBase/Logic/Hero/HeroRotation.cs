@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using CodeBase.Services;
+using CodeBase.Services.Input;
+using UnityEngine;
 
 namespace CodeBase.Logic.Hero
 {
@@ -14,7 +16,7 @@ namespace CodeBase.Logic.Hero
 
         private const int MaxVerticalAngle = 70;
 
-        private PlayerInput _playerInput;
+        private IInputService _inputService;
         private HeroAiming _heroAiming;
         private float xAxis, yAxis;
         private float _xFollowPosition;
@@ -22,15 +24,31 @@ namespace CodeBase.Logic.Hero
         private float _ogYPosition;
         private float _currentRotationVerticalSpeed;
         private float _currentRotationHorizontalSpeed;
+        private bool _switchSide;
 
         private void Awake()
         {
-            _playerInput = new PlayerInput();
+            _inputService = AllServices.Container.Single<IInputService>();
             _heroAiming = GetComponent<HeroAiming>();
             _heroAiming.ToHip += SetHip;
             _heroAiming.ToAim += SetAim;
             SetHip();
         }
+
+        private void OnEnable()
+        {
+            _inputService.Enable();
+            _inputService.SwitchedSide += SwitchSide;
+        }
+
+        private void OnDisable()
+        {
+            _inputService.Disable();
+            _inputService.SwitchedSide -= SwitchSide;
+        }
+
+        private void SwitchSide() =>
+            _switchSide = true;
 
         private void SetHip()
         {
@@ -44,12 +62,6 @@ namespace CodeBase.Logic.Hero
             _currentRotationHorizontalSpeed = _aimRotationHorizontalSpeed;
         }
 
-        private void OnEnable() =>
-            _playerInput.Enable();
-
-        private void OnDisable() =>
-            _playerInput.Disable();
-
         private void Update() =>
             Rotate();
 
@@ -62,7 +74,7 @@ namespace CodeBase.Logic.Hero
 
         private void Rotate()
         {
-            Vector2 delta = _playerInput.Player.Look.ReadValue<Vector2>();
+            Vector2 delta = _inputService.LookAxis;
 
             xAxis += delta.x * _currentRotationHorizontalSpeed;
             yAxis -= delta.y * _currentRotationVerticalSpeed;
@@ -80,8 +92,11 @@ namespace CodeBase.Logic.Hero
 
         void MoveCamera()
         {
-            if (_playerInput.Player.SwitchSide.IsPressed())
+            if (_switchSide)
+            {
                 _xFollowPosition = -_xFollowPosition;
+                _switchSide = false;
+            }
 
             _yFollowPosition = _ogYPosition;
 

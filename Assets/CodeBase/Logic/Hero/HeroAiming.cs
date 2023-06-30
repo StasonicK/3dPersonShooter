@@ -1,4 +1,6 @@
 ﻿using System;
+using CodeBase.Services;
+using CodeBase.Services.Input;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero
@@ -12,8 +14,8 @@ namespace CodeBase.Logic.Hero
 
         private const float CentralPosition = 0.5f;
 
+        private IInputService _inputService;
         public Transform AimPosition;
-        private PlayerInput _playerInput;
         private HeroAnimator _heroAnimator;
 
         public event Action ToHip;
@@ -21,19 +23,19 @@ namespace CodeBase.Logic.Hero
 
         private void Awake()
         {
-            _playerInput = new PlayerInput();
+            _inputService = AllServices.Container.Single<IInputService>();
             _heroAnimator = GetComponent<HeroAnimator>();
         }
 
         private void OnEnable() =>
-            _playerInput.Enable();
+            _inputService.Enable();
 
         private void OnDisable() =>
-            _playerInput.Disable();
+            _inputService.Disable();
 
         private void Update()
         {
-            if (_playerInput.Player.Aim.IsPressed())
+            if (_inputService.IsAimButtonUp())
             {
                 ToAim?.Invoke();
                 _heroAnimator.PlayAim();
@@ -44,11 +46,15 @@ namespace CodeBase.Logic.Hero
                 _heroAnimator.PlayHipFire();
             }
 
+            RotateToScreenCenter();
+        }
+
+        private void RotateToScreenCenter()
+        {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(CentralPosition, CentralPosition, 0));
             var targetPosition = MaxDistancePosition(ray);
             AimPosition.position =
                 Vector3.Lerp(AimPosition.position, targetPosition, _aimSmoothSpeed * Time.deltaTime);
-            Debug.Log($"_aimPosition.position: {AimPosition.position}");
         }
 
         private Vector3 MaxDistancePosition(Ray ray)

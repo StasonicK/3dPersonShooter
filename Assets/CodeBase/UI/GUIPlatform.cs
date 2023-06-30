@@ -6,7 +6,10 @@ namespace CodeBase.UI
     {
         [SerializeField] private GameObject _mobileGui;
 
-        private void Awake()
+        private void Awake() =>
+            CheckPlatform();
+
+        private void CheckPlatform()
         {
             if (Application.isMobilePlatform)
                 _mobileGui.SetActive(true);

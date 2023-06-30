@@ -177,7 +177,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _bullet
       value: 
-      objectReference: {fileID: 3922509821686636603, guid: 15e4b318f7aafd14db9c9c9d17dec4f5,
+      objectReference: {fileID: 5536084803829346109, guid: 65fd84df3ff65d04f85c5961a820d02d,
         type: 3}
     - target: {fileID: 28404678898071639, guid: da3f7f4e517ce8142947b26e1e05bb30,
         type: 3}
@@ -192,7 +192,7 @@ PrefabInstance:
     - target: {fileID: 28404678898071639, guid: da3f7f4e517ce8142947b26e1e05bb30,
         type: 3}
       propertyPath: _bulletVelocity
-      value: 50
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 246733141764566068, guid: da3f7f4e517ce8142947b26e1e05bb30,
         type: 3}

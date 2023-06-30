@@ -1,3 +1,5 @@
+using CodeBase.Services;
+using CodeBase.Services.Input;
 using UnityEngine;
 
 namespace CodeBase.Logic.Hero
@@ -11,9 +13,8 @@ namespace CodeBase.Logic.Hero
         [SerializeField] private float _runForwardSpeed = 7f;
         [SerializeField] private float _runBackSpeed = 5f;
 
-        private const float MinimumMagnitude = 0.01f;
 
-        private PlayerInput _playerInput;
+        private IInputService _inputService;
         private CharacterController _characterController;
         private HeroAnimator _heroAnimator;
         private bool _isGrounded;
@@ -22,23 +23,23 @@ namespace CodeBase.Logic.Hero
 
         private void Awake()
         {
-            _playerInput = new PlayerInput();
+            _inputService = AllServices.Container.Single<IInputService>();
             _characterController = GetComponent<CharacterController>();
             _heroAnimator = GetComponent<HeroAnimator>();
         }
 
         private void OnEnable() =>
-            _playerInput.Enable();
+            _inputService.Enable();
 
         private void OnDisable() =>
-            _playerInput.Disable();
+            _inputService.Disable();
 
         private void Update() =>
             Move();
 
         private void Move()
         {
-            Vector2 movementInput = _playerInput.Player.Move.ReadValue<Vector2>();
+            Vector2 movementInput = _inputService.MoveAxis;
             Vector3 airDirection = Vector3.zero;
 
             if (_characterController.isGrounded)
@@ -46,37 +47,45 @@ namespace CodeBase.Logic.Hero
             else
                 Direction = transform.forward * movementInput.y + transform.right * movementInput.x;
 
-            Debug.Log($"x: {movementInput.x}");
-            Debug.Log($"y: {movementInput.y}");
-
-            if (movementInput.magnitude > MinimumMagnitude)
+            if (movementInput.magnitude > Constants.MinimumMagnitude)
             {
-                if (_playerInput.Player.Run.IsPressed())
-                {
-                    _characterController.Move((Direction.normalized * MovementSpeed(Direction.normalized, true) +
-                                               airDirection.normalized * _walkBackSpeed) * Time.deltaTime);
-                    _heroAnimator.SetHorizontalInput(movementInput.y);
-                    _heroAnimator.SetVerticalInput(movementInput.x);
-                    _heroAnimator.PlayRun();
-                }
+                if (_inputService.IsRunButtonUp())
+                    SetRun(airDirection, movementInput);
                 else
-                {
-                    _characterController.Move((Direction.normalized * MovementSpeed(Direction.normalized, false) +
-                                               airDirection.normalized * _walkBackSpeed) * Time.deltaTime);
-                    _heroAnimator.SetHorizontalInput(movementInput.y);
-                    _heroAnimator.SetVerticalInput(movementInput.x);
-                    _heroAnimator.PlayWalk();
-                }
+                    SetWalk(airDirection, movementInput);
             }
             else
             {
-                _heroAnimator.SetHorizontalInput(movementInput.y);
-                _heroAnimator.SetVerticalInput(movementInput.x);
-                _heroAnimator.PlayIdle();
+                SetIdle(movementInput);
             }
         }
 
-        private float MovementSpeed(Vector3 direction, bool isRun)
+        private void SetRun(Vector3 airDirection, Vector2 movementInput)
+        {
+            _characterController.Move((Direction.normalized * GetMovementSpeed(Direction.normalized, true) +
+                                       airDirection.normalized * _walkBackSpeed) * Time.deltaTime);
+            _heroAnimator.SetHorizontalInput(movementInput.y);
+            _heroAnimator.SetVerticalInput(movementInput.x);
+            _heroAnimator.PlayRun();
+        }
+
+        private void SetWalk(Vector3 airDirection, Vector2 movementInput)
+        {
+            _characterController.Move((Direction.normalized * GetMovementSpeed(Direction.normalized, false) +
+                                       airDirection.normalized * _walkBackSpeed) * Time.deltaTime);
+            _heroAnimator.SetHorizontalInput(movementInput.y);
+            _heroAnimator.SetVerticalInput(movementInput.x);
+            _heroAnimator.PlayWalk();
+        }
+
+        private void SetIdle(Vector2 movementInput)
+        {
+            _heroAnimator.SetHorizontalInput(movementInput.y);
+            _heroAnimator.SetVerticalInput(movementInput.x);
+            _heroAnimator.PlayIdle();
+        }
+
+        private float GetMovementSpeed(Vector3 direction, bool isRun)
         {
             if (isRun)
             {

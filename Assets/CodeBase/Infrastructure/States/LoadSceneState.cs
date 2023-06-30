@@ -26,7 +26,7 @@ namespace CodeBase.Infrastructure.States
         {
             _scene = scene;
 
-            if (_scene.ToString().Contains(LevelName)) 
+            if (_scene.ToString().Contains(LevelName))
                 _loadingCurtain.Show();
 
             _sceneLoader.Load(_scene, OnLoaded);

@@ -1,9 +1,19 @@
+using System;
+using UnityEngine;
+
 namespace CodeBase.Services.Input
 {
     public interface IInputService : IService
     {
-        // Vector2 Axis { get; }
+        public event Action Shot;
+        public event Action Jumped;
+        public event Action SwitchedSide;
 
-        // bool IsAttackButtonUp();
+        Vector2 MoveAxis { get; }
+        Vector2 LookAxis { get; }
+        bool IsRunButtonUp();
+        void Enable();
+        void Disable();
+        bool IsAimButtonUp();
     }
 }

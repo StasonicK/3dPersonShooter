@@ -1,4 +1,6 @@
 ﻿using CodeBase.Logic.Hero;
+using CodeBase.Services;
+using CodeBase.Services.Input;
 using UnityEngine;
 
 namespace CodeBase.Logic.Weapon
@@ -13,16 +15,17 @@ namespace CodeBase.Logic.Weapon
         [SerializeField] private float _lightReturnSpeed = 20;
 
         [HideInInspector] public AudioSource _audioSource;
-        private PlayerInput _playerInput;
+        private IInputService _inputService;
         private HeroAiming _heroAiming;
         private Light _muzzleFlashLight;
         private ParticleSystem _muzzleFlashParticles;
         private float _lightIntensity;
         private float _fireRateTimer;
         private bool _clicked;
+        private bool _needShoot;
 
         private void Awake() =>
-            _playerInput = new PlayerInput();
+            _inputService = AllServices.Container.Single<IInputService>();
 
         private void Start()
         {
@@ -35,11 +38,17 @@ namespace CodeBase.Logic.Weapon
             _fireRateTimer = _fireRate;
         }
 
-        private void OnEnable() =>
-            _playerInput.Enable();
+        private void OnEnable()
+        {
+            _inputService.Enable();
+            _inputService.Shot += Shot;
+        }
 
-        private void OnDisable() =>
-            _playerInput.Disable();
+        private void OnDisable()
+        {
+            _inputService.Disable();
+            _inputService.Shot -= Shot;
+        }
 
         private void Update()
         {
@@ -50,6 +59,9 @@ namespace CodeBase.Logic.Weapon
                 Mathf.Lerp(_muzzleFlashLight.intensity, 0, _lightReturnSpeed * Time.deltaTime);
         }
 
+        private void Shot() =>
+            _needShoot = true;
+
         private bool CanFire()
         {
             _fireRateTimer += Time.deltaTime;
@@ -57,8 +69,11 @@ namespace CodeBase.Logic.Weapon
             if (_fireRateTimer < _fireRate)
                 return false;
 
-            if (_playerInput.Player.Shoot.IsPressed())
+            if (_needShoot)
+            {
+                _needShoot = false;
                 return true;
+            }
 
             return false;
         }
@@ -73,7 +88,6 @@ namespace CodeBase.Logic.Weapon
             TriggerMuzzleFlash();
 
             GameObject currentBullet = Instantiate(_bullet, _barrelPosition.position, _barrelPosition.rotation);
-            currentBullet.GetComponent<Bullet>().Direction = _barrelPosition.transform.forward;
             currentBullet.GetComponentInChildren<Rigidbody>()
                 .AddForce(_barrelPosition.forward * _bulletVelocity, ForceMode.Impulse);
         }

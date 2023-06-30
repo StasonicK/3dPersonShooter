@@ -1,15 +1,41 @@
+using System;
+using UnityEngine;
+
 namespace CodeBase.Services.Input
 {
-    public abstract class InputService : IInputService
+    public class InputService : IInputService
     {
-        protected const string Horizontal = "Horizontal";
-        protected const string Vertical = "Vertical";
+        private PlayerInput _playerInput;
 
-        // public abstract Vector2 Axis { get; }
+        public event Action Shot;
+        public event Action Jumped;
+        public event Action SwitchedSide;
 
-        // public abstract bool IsAttackButtonUp();
+        public InputService()
+        {
+            _playerInput = new PlayerInput();
 
-        // protected static Vector2 SimpleInputAxis() =>
-        //     new(SimpleInput.GetAxis(Horizontal), SimpleInput.GetAxis(Vertical));
+            _playerInput.Player.Jump.started += x => { Jumped?.Invoke(); };
+            _playerInput.Player.SwitchSide.started += x => { SwitchedSide?.Invoke(); };
+            _playerInput.Player.Shoot.started += x => { Shot?.Invoke(); };
+
+            _playerInput.Enable();
+        }
+
+        public void Enable() =>
+            _playerInput.Enable();
+
+        public void Disable() =>
+            _playerInput.Disable();
+
+        public Vector2 MoveAxis => _playerInput.Player.Move.ReadValue<Vector2>();
+
+        public Vector2 LookAxis => _playerInput.Player.Look.ReadValue<Vector2>();
+
+        public bool IsAimButtonUp() =>
+            _playerInput.Player.Aim.IsPressed();
+
+        public bool IsRunButtonUp() =>
+            _playerInput.Player.Run.IsPressed();
     }
 }

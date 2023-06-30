@@ -9,7 +9,7 @@ namespace CodeBase.Infrastructure
 
         private bool _isInitial = true;
 
-        private void Awake() => 
+        private void Awake() =>
             DontDestroyOnLoad(this);
 
         public void Show()

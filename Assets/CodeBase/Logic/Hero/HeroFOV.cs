@@ -35,7 +35,10 @@ namespace CodeBase.Logic.Hero
         private void SetAim() =>
             _isHipFire = false;
 
-        private void Update()
+        private void Update() =>
+            SetFov();
+
+        private void SetFov()
         {
             _currentFov = _isHipFire ? _hipFov : _adsFov;
 

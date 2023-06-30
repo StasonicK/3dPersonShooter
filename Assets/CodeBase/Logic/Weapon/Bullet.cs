@@ -6,8 +6,6 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float timeToDestroy;
     [SerializeField] private float _damage;
 
-    [HideInInspector] public Vector3 Direction;
-
     private void Start() =>
         Destroy(gameObject, timeToDestroy);
 
