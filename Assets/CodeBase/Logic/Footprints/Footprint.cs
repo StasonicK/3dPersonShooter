@@ -26,7 +26,7 @@ namespace CodeBase.Logic.Footprints
                 transform.localScale = new Vector3(_size.x * percentTimeLeft, _size.y * percentTimeLeft,
                     _size.z * percentTimeLeft);
 
-                if (elapsedTime > _lifetime) 
+                if (elapsedTime > _lifetime)
                     Destroy(gameObject);
             }
         }

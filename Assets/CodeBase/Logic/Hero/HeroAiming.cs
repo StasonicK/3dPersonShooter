@@ -35,16 +35,16 @@ namespace CodeBase.Logic.Hero
 
         private void Update()
         {
-            if (_inputService.IsAimButtonUp())
-            {
-                ToAim?.Invoke();
-                _heroAnimator.PlayAim();
-            }
-            else
-            {
-                ToHip?.Invoke();
-                _heroAnimator.PlayHipFire();
-            }
+            // if (_inputService.IsAimButtonUp())
+            // {
+            //     ToAim?.Invoke();
+            //     _heroAnimator.PlayAim();
+            // }
+            // else
+            // {
+            //     ToHip?.Invoke();
+            //     _heroAnimator.PlayHipFire();
+            // }
 
             RotateToScreenCenter();
         }
