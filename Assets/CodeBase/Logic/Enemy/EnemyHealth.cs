@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Logic.Enemy
 {
-    public class EnemyHealth : MonoBehaviour,IHealth
+    public class EnemyHealth : MonoBehaviour, IHealth
     {
         public float Health;
         public bool IsDead { private set; get; }

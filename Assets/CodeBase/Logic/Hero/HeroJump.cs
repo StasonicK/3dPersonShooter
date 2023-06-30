@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CodeBase.Logic.Hero
 {
@@ -22,14 +23,28 @@ namespace CodeBase.Logic.Hero
             _heroAnimator = GetComponent<HeroAnimator>();
         }
 
-        private void OnEnable() =>
+        private void TryJump(InputAction.CallbackContext obj)
+        {
+            if (_characterController.isGrounded)
+                Jump();
+        }
+
+        private void OnEnable()
+        {
             _playerInput.Enable();
+            _playerInput.Player.Jump.started += TryJump;
+        }
 
-        private void OnDisable() =>
+        private void OnDisable()
+        {
             _playerInput.Disable();
+            _playerInput.Player.Jump.started -= TryJump;
+        }
 
-        private void Update() =>
+        private void Update()
+        {
             Move();
+        }
 
         private void Move()
         {
@@ -38,14 +53,19 @@ namespace CodeBase.Logic.Hero
             if (_isGrounded && _velocity.y < 0)
                 _velocity.y = 0;
 
-            if (_playerInput.Player.Jump.IsPressed() && _isGrounded)
-            {
-                _velocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
-                _heroAnimator.PlayJump();
-            }
+            // if (_playerInput.Player.Jump.IsPressed() && _isGrounded)
+            // {
+            //     Jump();
+            // }
 
             _velocity.y += _gravityValue * Time.deltaTime;
             _characterController.Move(_velocity * Time.deltaTime);
+        }
+
+        private void Jump()
+        {
+            _velocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
+            _heroAnimator.PlayJump();
         }
     }
 }

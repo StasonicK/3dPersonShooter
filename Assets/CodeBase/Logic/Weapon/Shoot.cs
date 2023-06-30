@@ -1,14 +1,10 @@
-﻿using System;
-using CodeBase.Logic.Hero;
+﻿using CodeBase.Logic.Hero;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CodeBase.Logic.Weapon
 {
     public class Shoot : MonoBehaviour
     {
-        [SerializeField] private Button _shootButtonLeft;
-        [SerializeField] private Button _shootButtonRight;
         [SerializeField] private float _fireRate;
         [SerializeField] private GameObject _bullet;
         [SerializeField] private Transform _barrelPosition;
@@ -27,8 +23,7 @@ namespace CodeBase.Logic.Weapon
 
         private void Awake()
         {
-            // _shootButtonLeft.onClick.AddListener(Clicked);
-            // _shootButtonRight.onClick.AddListener(Clicked);
+            _playerInput = new PlayerInput();
         }
 
         private void Clicked() =>
@@ -37,7 +32,6 @@ namespace CodeBase.Logic.Weapon
         private void Start()
         {
             _audioSource = GetComponent<AudioSource>();
-            _playerInput = new PlayerInput();
             _heroAiming = GetComponentInParent<HeroAiming>();
             _muzzleFlashLight = GetComponentInChildren<Light>();
             _muzzleFlashParticles = GetComponentInChildren<ParticleSystem>();
