@@ -40,6 +40,9 @@ namespace CodeBase.Logic.Hero
             if (_characterController.isGrounded)
             {
                 _velocity.y += Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
+                Vector2 movementInput = _playerInput.Player.Move.ReadValue<Vector2>();
+                _heroAnimator.SetHorizontalInput(movementInput.y);
+                _heroAnimator.SetVerticalInput(movementInput.x);
                 _heroAnimator.PlayJump();
             }
         }
